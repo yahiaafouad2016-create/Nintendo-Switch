@@ -33,7 +33,6 @@ input{padding:8px;border-radius:8px;border:none;margin:5px}
 <div class="app" onclick="openApp('logic')"><span>🧩</span><p>Logic</p></div>
 <div class="app" onclick="openApp('math')"><span>➗</span><p>Math</p></div>
 <div class="app" onclick="openApp('exam')"><span>📅</span><p>Exam</p></div>
-<div class="app" onclick="openApp('convert')"><span>📏</span><p>Convert</p></div>
 <div class="app" onclick="openApp('timer')"><span>⏱️</span><p>Timer</p></div>
 <div class="app" onclick="openApp('mood')"><span>🙂</span><p>Mood</p></div>
 </div>
@@ -75,10 +74,24 @@ input{padding:8px;border-radius:8px;border:none;margin:5px}
 <div id="math" class="screen">
 <button class="back" onclick="home()">⬅</button>
 <h2>Math Quickfire</h2>
-<p id="mathQ"></p>
-<input id="mathA">
-<button onclick="checkMath()">Check</button>
+
+<div id="mathSelect">
+  <p>Choose operation:</p>
+  <button onclick="startMath('add')">➕ Add</button>
+  <button onclick="startMath('sub')">➖ Subtract</button>
+  <button onclick="startMath('mul')">✖ Multiply</button>
+  <button onclick="startMath('div')">➗ Divide</button>
 </div>
+
+<div id="mathGame" style="display:none;">
+  <p id="mathQ" style="font-size:24px;"></p>
+  <input id="mathA" placeholder="Your answer">
+  <br>
+  <button onclick="checkMath()">Submit</button>
+  <p id="mathScore">Score: 0</p>
+</div>
+</div>
+
 
 <!-- Exam -->
 <div id="exam" class="screen">
@@ -87,15 +100,6 @@ input{padding:8px;border-radius:8px;border:none;margin:5px}
 <input type="date" id="examDate">
 <button onclick="saveExam()">Save</button>
 <p id="countdown"></p>
-</div>
-
-<!-- Convert -->
-<div id="convert" class="screen">
-<button class="back" onclick="home()">⬅</button>
-<h2>Unit Converter</h2>
-<input id="cm" placeholder="cm">
-<button onclick="convert()">Convert to meters</button>
-<p id="out"></p>
 </div>
 
 <!-- Timer -->
@@ -145,10 +149,66 @@ let mins=(Date.now()-tStart)/60000;
 document.getElementById("wpm").innerText=Math.round(w/mins)+" WPM"}
 
 // Math
-let a=Math.floor(Math.random()*10),b=Math.floor(Math.random()*10);
-document.getElementById("mathQ").innerText=a+" + "+b;
+let mathMode = "";
+let mathAnswer = 0;
+let score = 0;
+
+function startMath(mode){
+  mathMode = mode;
+  score = 0;
+  document.getElementById("mathScore").innerText = "Score: 0";
+  document.getElementById("mathSelect").style.display = "none";
+  document.getElementById("mathGame").style.display = "block";
+  nextQuestion();
+}
+
+function nextQuestion(){
+  let a, b, q;
+
+  if(mathMode === "add"){
+    a = rand(20, 200);
+    b = rand(20, 200);
+    mathAnswer = a + b;
+    q = `${a} + ${b}`;
+  }
+
+  if(mathMode === "sub"){
+    a = rand(50, 300);
+    b = rand(10, a);
+    mathAnswer = a - b;
+    q = `${a} − ${b}`;
+  }
+
+  if(mathMode === "mul"){
+    a = rand(5, 25);
+    b = rand(5, 25);
+    mathAnswer = a * b;
+    q = `${a} × ${b}`;
+  }
+
+  if(mathMode === "div"){
+    b = rand(2, 15);
+    mathAnswer = rand(2, 20);
+    a = b * mathAnswer;
+    q = `${a} ÷ ${b}`;
+  }
+
+  document.getElementById("mathQ").innerText = q;
+  document.getElementById("mathA").value = "";
+}
+
 function checkMath(){
-alert(Number(mathA.value)==a+b?"Correct":"Wrong")}
+  let user = Number(document.getElementById("mathA").value);
+  if(user === mathAnswer){
+    score++;
+    document.getElementById("mathScore").innerText = "Score: " + score;
+  }
+  nextQuestion();
+}
+
+function rand(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 // Exam
 function saveExam(){
@@ -157,10 +217,6 @@ setInterval(()=>{
 if(localStorage.exam){
 let d=new Date(localStorage.exam)-new Date();
 countdown.innerText=Math.ceil(d/86400000)+" days"}},1000)
-
-// Convert
-function convert(){
-out.innerText=(cm.value/100)+" meters"}
 
 // Timer
 function startTimer(m){

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nintendo Switch</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0a58ff, #0033aa);
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Home screen */
+#home {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 20px;
+}
+
+/* App icons */
+.app {
+  background: rgba(255,255,255,0.15);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.app:hover {
+  transform: scale(1.05);
+}
+
+.app span {
+  font-size: 32px;
+  display: block;
+}
+
+.app p {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+/* App screen */
+.app-screen {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: #001a4d;
+  padding: 20px;
+}
+
+.back {
+  background: white;
+  color: black;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div id="home">
+  <div class="app" onclick="openApp('reaction')"><span>⚡</span><p>Reaction</p></div>
+  <div class="app" onclick="openApp('memory')"><span>🧠</span><p>Memory</p></div>
+  <div class="app" onclick="openApp('typing')"><span>⌨️</span><p>Typing</p></div>
+  <div class="app" onclick="openApp('logic')"><span>🧩</span><p>Logic</p></div>
+  <div class="app" onclick="openApp('math')"><span>➗</span><p>Math</p></div>
+  <div class="app" onclick="openApp('exam')"><span>📅</span><p>Exam</p></div>
+  <div class="app" onclick="openApp('convert')"><span>📏</span><p>Convert</p></div>
+  <div class="app" onclick="openApp('timer')"><span>⏱️</span><p>Timer</p></div>
+  <div class="app" onclick="openApp('mood')"><span>🙂</span><p>Mood</p></div>
+</div>
+
+<!-- APPS -->
+
+<div id="reaction" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Reaction Game</h2>
+  <p>Coming soon ⚡</p>
+</div>
+
+<div id="memory" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Memory Match</h2>
+  <p>Coming soon 🧠</p>
+</div>
+
+<div id="typing" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Typing Speed</h2>
+  <p>Coming soon ⌨️</p>
+</div>
+
+<div id="logic" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Logic Puzzles</h2>
+  <p>Coming soon 🧩</p>
+</div>
+
+<div id="math" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Math Quickfire</h2>
+  <p>Coming soon ➗</p>
+</div>
+
+<div id="exam" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Exam Countdown</h2>
+  <p>Coming soon 📅</p>
+</div>
+
+<div id="convert" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Unit Converter</h2>
+  <p>Coming soon 📏</p>
+</div>
+
+<div id="timer" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Timers</h2>
+  <p>Coming soon ⏱️</p>
+</div>
+
+<div id="mood" class="app-screen">
+  <button class="back" onclick="goHome()">⬅ Home</button>
+  <h2>Mood Check</h2>
+  <p>How are you feeling today?</p>
+</div>
+
+<script>
+function openApp(id) {
+  document.getElementById("home").style.display = "none";
+  document.getElementById(id).style.display = "block";
+}
+
+function goHome() {
+  document.querySelectorAll(".app-screen").forEach(app => app.style.display = "none");
+  document.getElementById("home").style.display = "grid";
+}
+</script>
+
+</body>
+</html>

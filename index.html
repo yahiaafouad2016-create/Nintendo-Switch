@@ -1,155 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nintendo Switch</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Console</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0a58ff, #0033aa);
-  color: white;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Home screen */
-#home {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 20px;
-}
-
-/* App icons */
-.app {
-  background: rgba(255,255,255,0.15);
-  border-radius: 18px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.app:hover {
-  transform: scale(1.05);
-}
-
-.app span {
-  font-size: 32px;
-  display: block;
-}
-
-.app p {
-  margin: 8px 0 0;
-  font-size: 14px;
-}
-
-/* App screen */
-.app-screen {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: #001a4d;
-  padding: 20px;
-}
-
-.back {
-  background: white;
-  color: black;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
+body{
+margin:0;font-family:Arial;background:#0a58ff;color:white;height:100vh;overflow:hidden}
+#home{
+display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:20px}
+.app{
+background:rgba(255,255,255,.2);border-radius:18px;padding:20px;
+text-align:center;cursor:pointer}
+.app span{font-size:32px}
+.app p{margin:6px 0 0;font-size:14px}
+.screen{
+display:none;position:absolute;inset:0;background:#001a4d;padding:20px}
+button{
+border:none;border-radius:10px;padding:10px;margin:5px;font-size:16px}
+.back{background:white;color:black}
+input{padding:8px;border-radius:8px;border:none;margin:5px}
 </style>
 </head>
 
 <body>
 
-<!-- HOME -->
 <div id="home">
-  <div class="app" onclick="openApp('reaction')"><span>⚡</span><p>Reaction</p></div>
-  <div class="app" onclick="openApp('memory')"><span>🧠</span><p>Memory</p></div>
-  <div class="app" onclick="openApp('typing')"><span>⌨️</span><p>Typing</p></div>
-  <div class="app" onclick="openApp('logic')"><span>🧩</span><p>Logic</p></div>
-  <div class="app" onclick="openApp('math')"><span>➗</span><p>Math</p></div>
-  <div class="app" onclick="openApp('exam')"><span>📅</span><p>Exam</p></div>
-  <div class="app" onclick="openApp('convert')"><span>📏</span><p>Convert</p></div>
-  <div class="app" onclick="openApp('timer')"><span>⏱️</span><p>Timer</p></div>
-  <div class="app" onclick="openApp('mood')"><span>🙂</span><p>Mood</p></div>
+<div class="app" onclick="openApp('reaction')"><span>⚡</span><p>Reaction</p></div>
+<div class="app" onclick="openApp('memory')"><span>🧠</span><p>Memory</p></div>
+<div class="app" onclick="openApp('typing')"><span>⌨️</span><p>Typing</p></div>
+<div class="app" onclick="openApp('logic')"><span>🧩</span><p>Logic</p></div>
+<div class="app" onclick="openApp('math')"><span>➗</span><p>Math</p></div>
+<div class="app" onclick="openApp('exam')"><span>📅</span><p>Exam</p></div>
+<div class="app" onclick="openApp('convert')"><span>📏</span><p>Convert</p></div>
+<div class="app" onclick="openApp('timer')"><span>⏱️</span><p>Timer</p></div>
+<div class="app" onclick="openApp('mood')"><span>🙂</span><p>Mood</p></div>
 </div>
 
-<!-- APPS -->
-
-<div id="reaction" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Reaction Game</h2>
-  <p>Coming soon ⚡</p>
+<!-- Reaction -->
+<div id="reaction" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Reaction Game</h2>
+<p id="reactText">Wait...</p>
+<button onclick="startReaction()">Start</button>
 </div>
 
-<div id="memory" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Memory Match</h2>
-  <p>Coming soon 🧠</p>
+<!-- Memory -->
+<div id="memory" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Memory Match</h2>
+<p>Remember: 3 7 2</p>
+<button onclick="alert('Answer: 3 7 2')">Show</button>
 </div>
 
-<div id="typing" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Typing Speed</h2>
-  <p>Coming soon ⌨️</p>
+<!-- Typing -->
+<div id="typing" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Typing Speed</h2>
+<p id="text">type fast</p>
+<input id="typeInput" oninput="checkTyping()">
+<p id="wpm"></p>
 </div>
 
-<div id="logic" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Logic Puzzles</h2>
-  <p>Coming soon 🧩</p>
+<!-- Logic -->
+<div id="logic" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Logic</h2>
+<p>2, 4, 8, ?</p>
+<button onclick="alert('Answer: 16')">Answer</button>
 </div>
 
-<div id="math" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Math Quickfire</h2>
-  <p>Coming soon ➗</p>
+<!-- Math -->
+<div id="math" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Math Quickfire</h2>
+<p id="mathQ"></p>
+<input id="mathA">
+<button onclick="checkMath()">Check</button>
 </div>
 
-<div id="exam" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Exam Countdown</h2>
-  <p>Coming soon 📅</p>
+<!-- Exam -->
+<div id="exam" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Exam Countdown</h2>
+<input type="date" id="examDate">
+<button onclick="saveExam()">Save</button>
+<p id="countdown"></p>
 </div>
 
-<div id="convert" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Unit Converter</h2>
-  <p>Coming soon 📏</p>
+<!-- Convert -->
+<div id="convert" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Unit Converter</h2>
+<input id="cm" placeholder="cm">
+<button onclick="convert()">Convert to meters</button>
+<p id="out"></p>
 </div>
 
-<div id="timer" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Timers</h2>
-  <p>Coming soon ⏱️</p>
+<!-- Timer -->
+<div id="timer" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Study Timer</h2>
+<button onclick="startTimer(25)">Start 25 min</button>
+<p id="time"></p>
 </div>
 
-<div id="mood" class="app-screen">
-  <button class="back" onclick="goHome()">⬅ Home</button>
-  <h2>Mood Check</h2>
-  <p>How are you feeling today?</p>
+<!-- Mood -->
+<div id="mood" class="screen">
+<button class="back" onclick="home()">⬅</button>
+<h2>Mood Check</h2>
+<button onclick="alert('Take a short break')">🙂</button>
+<button onclick="alert('Try deep breathing')">😐</button>
+<button onclick="alert('Talk to someone')">😞</button>
 </div>
 
 <script>
-function openApp(id) {
-  document.getElementById("home").style.display = "none";
-  document.getElementById(id).style.display = "block";
-}
+function openApp(id){
+home();document.getElementById(id).style.display="block"
+document.getElementById("home").style.display="none"}
+function home(){
+document.querySelectorAll(".screen").forEach(s=>s.style.display="none")
+document.getElementById("home").style.display="grid"}
 
-function goHome() {
-  document.querySelectorAll(".app-screen").forEach(app => app.style.display = "none");
-  document.getElementById("home").style.display = "grid";
-}
+// Reaction
+let start;
+function startReaction(){
+document.getElementById("reactText").innerText="WAIT...";
+setTimeout(()=>{
+start=Date.now();
+document.getElementById("reactText").innerText="TAP!";
+},Math.random()*2000+1000)}
+document.getElementById("reaction").onclick=()=>{
+if(start){
+alert(Date.now()-start+" ms");
+start=null}}
+
+// Typing
+let tStart=Date.now();
+function checkTyping(){
+let v=document.getElementById("typeInput").value;
+let w=v.split(" ").length;
+let mins=(Date.now()-tStart)/60000;
+document.getElementById("wpm").innerText=Math.round(w/mins)+" WPM"}
+
+// Math
+let a=Math.floor(Math.random()*10),b=Math.floor(Math.random()*10);
+document.getElementById("mathQ").innerText=a+" + "+b;
+function checkMath(){
+alert(Number(mathA.value)==a+b?"Correct":"Wrong")}
+
+// Exam
+function saveExam(){
+localStorage.exam=examDate.value}
+setInterval(()=>{
+if(localStorage.exam){
+let d=new Date(localStorage.exam)-new Date();
+countdown.innerText=Math.ceil(d/86400000)+" days"}},1000)
+
+// Convert
+function convert(){
+out.innerText=(cm.value/100)+" meters"}
+
+// Timer
+function startTimer(m){
+let t=m*60;
+setInterval(()=>{
+time.innerText=Math.floor(t/60)+":"+t%60;t--},1000)}
 </script>
 
 </body>
 </html>
+
